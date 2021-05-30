@@ -11,6 +11,7 @@ import './App.css';
 import BarreNavigation from './Navigation/BarreNavigation';
 import PagePanier from './Pages/PagePanier';
 import PageAccueil from './Pages/PageAcceuil';
+import PageAchatsAdmin from './Pages/PageAchatsAdmin';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <BarreNavigation/>
         <Route path="/" component={PageAccueil} exact/>
         <Route path="/Panier" component={PagePanier} exact/>
+        <Route path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
       </Container>
     </Router>
   );
