@@ -16,6 +16,9 @@ function BarreNavigation()
                     <LinkContainer to='/Panier'>
                         <Nav.Link>Panier</Nav.Link>
                     </LinkContainer>
+                    <LinkContainer to='/AchatsAdmin'>
+                        <Nav.Link>Achats admin</Nav.Link>
+                    </LinkContainer>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
