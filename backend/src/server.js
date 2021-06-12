@@ -114,7 +114,7 @@ app.post('/api/client/:nom/panier/retirer/:id' ,(requete,reponse) => {
     var idproduitReq = parseInt(requete.params.id);
     utiliserDB(async (db) =>{
         try{
-            RetirerPanier(db, nomClientReq, idproduitReq);
+            await RetirerPanier(db, nomClientReq, idproduitReq);
             reponse.status(200).json("Item retirer");
         }catch(erreur){
             reponse.status(500).json({message:erreur});

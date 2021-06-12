@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Table from 'react-bootstrap/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
@@ -9,51 +9,79 @@ import Button from 'react-bootstrap/button';
 
 function PageAchatsAdmin()
 {
+    const [ventes, setVentes] = useState([]);
+
+    useEffect(() => {
+        const chercherDonnes = async () => {
+            const resultat = await fetch(`/api/administrateur/ventes`);
+            const body = await resultat.json();
+            setVentes(body);
+        };
+        chercherDonnes();
+    }, []);
+    
+    function AfficherVentes() {
+        return ventes.map((vente, index) => {
+           const { _id, nomClient, produits} = vente
+           console.log(produits);
+           return (
+                <TableRow key={_id}>
+                    <TableCell align="center">{nomClient}</TableCell>
+                    <TableCell>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center"> Numero </TableCell>
+                                    <TableCell align="center"> Nom </TableCell>
+                                    <TableCell align="center"> Categorie</TableCell>
+                                    <TableCell align="center"> Prix</TableCell>
+                                    <TableCell align="center"> quantite</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                    {
+                                    produits.map(produit =>
+                                        <TableRow>
+                                            <TableCell align="center">{produit.id}</TableCell>
+                                            <TableCell align="center">{produit.nom}</TableCell>
+                                            <TableCell align="center">{produit.categorie}</TableCell>
+                                            <TableCell align="center">{produit.prixRegulier} $</TableCell>
+                                            <TableCell align="center">{produit.quantite}</TableCell>
+                                        </TableRow>
+                                        )
+                                    }
+                            </TableBody>
+                        </Table>
+                    </TableCell>
+                    <TableCell align="center">{calculertotal(produits)}</TableCell>
+                </TableRow>
+           )
+        });
+    };
+
+
+    function calculertotal(prod)
+    {
+        var totalCourrant =0;
+        prod.forEach(produit => totalCourrant += (produit.prixRegulier * produit.quantite));
+        totalCourrant = parseFloat(totalCourrant).toFixed(2);
+        return totalCourrant;
+    }
     return(
         <>
-            <h1>AchatsEffectuer</h1>
+            <h1>Achats effectuer</h1>
             <Table>
                 <TableHead>
                     <TableRow>
                     <TableCell align="center" >NomClient</TableCell>
                     <TableCell align="center" >produits</TableCell>
-                    <TableCell align="center">total</TableCell>
+                    <TableCell align="center">total</TableCell> 
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                            <TableRow>
-                                <TableCell align="center">Maxime</TableCell>
-                                <TableCell align="center">
-                                    <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell align="center" >Nomero Produit</TableCell>
-                                            <TableCell align="center" >nom</TableCell>
-                                            <TableCell align="center">categorie</TableCell>
-                                            <TableCell align="center">prix</TableCell>
-                                            <TableCell align="center">quantite</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell align="center" >1</TableCell>
-                                            <TableCell align="center" >Macbook pro 2019</TableCell>
-                                            <TableCell align="center">ordinateur</TableCell>
-                                            <TableCell align="center">1400.99</TableCell>
-                                            <TableCell align="center">1</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell align="center" >1</TableCell>
-                                            <TableCell align="center" >Macbook pro 2019</TableCell>
-                                            <TableCell align="center">ordinateur</TableCell>
-                                            <TableCell align="center">1400.99</TableCell>
-                                            <TableCell align="center">1</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                    </Table>
-                                </TableCell>
-                                <TableCell align="center">1500.99 $</TableCell>
-                            </TableRow>
+                <TableBody>                   
+                    { 
+                    AfficherVentes()
+                    }
                 </TableBody>
             </Table>
         </>

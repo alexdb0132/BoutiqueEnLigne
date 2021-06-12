@@ -11,11 +11,8 @@ import './App.css';
 import BarreNavigation from './Navigation/BarreNavigation';
 import PagePanier from './Pages/PagePanier';
 import PageAccueil from './Pages/PageAcceuil';
-<<<<<<< HEAD
-import PageAchatsAdmin from './Pages/PageAchatsAdmin';
-=======
 import PageCreationCompte from './Pages/CreationCompte/PageCreationCompte';
->>>>>>> 735b605b96869c6eb050bd2796312065add400b2
+import PageAchatsAdmin from './Pages/PageAchatsAdmin';
 
 function App() {
   return (
@@ -24,11 +21,8 @@ function App() {
         <BarreNavigation/>
         <Route path="/" component={PageAccueil} exact/>
         <Route path="/Panier" component={PagePanier} exact/>
-<<<<<<< HEAD
-        <Route path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
-=======
         <Route path="/CreationCompte" component={PageCreationCompte}/>
->>>>>>> 735b605b96869c6eb050bd2796312065add400b2
+        <Route path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
       </Container>
     </Router>
   );
