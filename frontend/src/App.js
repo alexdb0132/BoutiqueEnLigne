@@ -13,6 +13,7 @@ import PagePanier from './Pages/PagePanier';
 import PageAccueil from './Pages/PageAcceuil';
 import PageCreationCompte from './Pages/CreationCompte/PageCreationCompte';
 import PageAchatsAdmin from './Pages/PageAchatsAdmin';
+import PageProduits from './Pages/PageProduits';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Panier" component={PagePanier} exact/>
         <Route path="/CreationCompte" component={PageCreationCompte}/>
         <Route path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
+        <Route path="/Produits" component={PageProduits} />
       </Container>
     </Router>
   );

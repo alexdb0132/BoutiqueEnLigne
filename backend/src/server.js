@@ -7,6 +7,14 @@ import {AfficherPanier, ViderPanier,AjouterPanier,RetirerPanier } from './fctPan
 import {RechercherVentes} from './fctAdministrateurVente/AdminVente'
 // je veux me créer un test qui vérifie si une fonction écrie dans une bd
 
+import { getProduitsVoulues } from '../FonctionClient/getProduitsVoulues';
+import { getCategorie } from '../FonctionClient/getCategorie';
+import { getTotalProduits } from '../FonctionClient/getTotalProduits';
+import { putSelectionCategorie } from '../FonctionClient/putSelectionCategorie';
+import { postAjoutPanier } from '../FonctionClient/postAjoutPanier';
+import { getPanierClient } from '../FonctionClient/getPanierClient';
+import { deletePanierClient } from '../FonctionClient/deletePanierClient';
+
 const app = express();
 app.use(express.json());
 
@@ -161,4 +169,18 @@ app.post('/api/administrateur/ajouterVente', (requete,reponse) => {
 
 
 
-app.listen(8000, () => console.log('Écoute le port 8000'));
+app.get('/api/produits/count', getTotalProduits);
+
+app.get('/api/produits/:decalage/:produitsParPage', getProduitsVoulues);
+
+app.get('/api/produits/categorie', getCategorie);
+
+app.put('/api/produits/selectionCategorie', putSelectionCategorie);
+
+app.post('/api/produits/ajouterAuPanier', postAjoutPanier);
+
+app.get('/api/panier/:nomClient', getPanierClient);
+
+app.delete('/api/panier/suppression/:nomClient', deletePanierClient);
+
+app.listen(8000, () => console.log('Allo 8000'));
