@@ -1,12 +1,6 @@
 
-/*export function SontInformationsValides(p_nom, p_motDePasse){
-    EstInformationCompteValide
-    
-    return EstInformationCompteValide(p_nom) && EstInformationValide(p_motDePasse);
-}*/
-
 export function EstInformationValide(p_information){
-    let estInformationValide = false;
+    let estValide = false;
 
     if(p_information !== null && p_information !== undefined){
 
@@ -15,10 +9,10 @@ export function EstInformationValide(p_information){
             const informationSansEspaces = p_information.trim();
             if(informationSansEspaces.length !== 0){
     
-                estInformationValide = true;
+                estValide = true;
             }
         }
     }
 
-    return estInformationValide;
+    return estValide;
 }

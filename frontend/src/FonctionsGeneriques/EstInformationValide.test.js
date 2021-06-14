@@ -1,4 +1,4 @@
-import { EstInformationValide } from './PageCreationCompte'
+import { EstInformationValide } from './EstInformationValide'
 
 test('Vérifier une information du formulaire', () => {
     expect(EstInformationValide("")).toBe(false);
