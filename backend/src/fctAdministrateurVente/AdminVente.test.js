@@ -33,13 +33,11 @@ describe('AjouterVente', () =>{
         const donneesAttendu = {
             "nomClient": "test3",
             "produits": [{
-                "id": 1,
                 "nom": "MacBook pro",
                 "categorie": "ordinateur",
                 "prixRegulier": 1400.99,
                 "quantite": 1
             }, {
-                "id": 1,
                 "nom": "MacBook pro",
                 "categorie": "ordinateur",
                 "prixRegulier": 1400.99,

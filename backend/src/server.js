@@ -118,11 +118,10 @@ app.post('/api/client/:nom/panier/viderPanier', (requete, reponse) =>{
 
 app.post('/api/client/:nom/panier/ajouter/:id' ,(requete, reponse) => {
     var nomClientReq = requete.params.nom;
-    var idproduitReq = parseInt(requete.params.id);
-
+    var nomproduitReq = requete.params.id;
     utiliserDB(async (db) =>{
         try{
-            const MessageRetour = await AjouterPanier(db, nomClientReq, idproduitReq);
+            const MessageRetour = await AjouterPanier(db,nomClientReq,nomproduitReq);
             reponse.status(200).json(MessageRetour);
         }catch(erreur){
             reponse.status(500).json({message:erreur});
@@ -130,13 +129,12 @@ app.post('/api/client/:nom/panier/ajouter/:id' ,(requete, reponse) => {
     },reponse);
 });
 
-app.post('/api/client/:nom/panier/retirer/:id' ,(requete, reponse) => {
+app.post('/api/client/:nom/panier/retirer/:nomItem' ,(requete,reponse) => {
     var nomClientReq = requete.params.nom;
-    var idproduitReq = parseInt(requete.params.id);
-
+    var nomproduitReq = requete.params.nomItem;
     utiliserDB(async (db) =>{
         try{
-            await RetirerPanier(db, nomClientReq, idproduitReq);
+            RetirerPanier(db, nomClientReq, nomproduitReq);
             reponse.status(200).json("Item retirer");
         }catch(erreur){
             reponse.status(500).json({message:erreur});
