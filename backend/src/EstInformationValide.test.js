@@ -1,3 +1,4 @@
+// Autheur: Philippe-Anthony Daumas
 import {EstInformationValide} from './EstInformationValide';
 
 test('Vérifier que les informations reçues ne sont pas vide', () =>{

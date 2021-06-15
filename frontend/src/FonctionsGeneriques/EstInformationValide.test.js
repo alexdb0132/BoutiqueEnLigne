@@ -1,4 +1,5 @@
-import { EstInformationValide } from './EstInformationValide'
+// Autheur: Philippe-Anthony Daumas
+import { EstInformationValide } from './EstInformationValide';
 
 test('Vérifier une information du formulaire', () => {
     expect(EstInformationValide("")).toBe(false);

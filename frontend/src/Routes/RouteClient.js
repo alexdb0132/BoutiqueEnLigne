@@ -1,6 +1,7 @@
+// Autheur: Philippe-Anthony Daumas
 import React from 'react';
 import {
-    Redirect,
+  Redirect,
   Route 
 } from 'react-router-dom';
 

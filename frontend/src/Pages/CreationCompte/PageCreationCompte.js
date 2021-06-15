@@ -1,3 +1,4 @@
+// Autheur: Philippe-Anthony Daumas
 import React, { useState } from 'react';
 
 import Form from 'react-bootstrap/Form';
@@ -51,7 +52,11 @@ function PageCreationCompte(){
     }
 
     function AfficherErreurFormulaire(){
-        if(!EstInformationValide(informations.nom)){
+        if(informations.nom === "admin"){
+            message = "Le nom d'utilisateur de peut pas être admin!";
+            setAlert(AfficherMessageReussiteErreur(true, "danger", message));
+        }
+        else if(!EstInformationValide(informations.nom)){
             message = "Le champ nom ne peut pas être vide!";
             setAlert(AfficherMessageReussiteErreur(true, "danger", message));
         }
@@ -60,10 +65,6 @@ function PageCreationCompte(){
             || informations.deuxiemeMotDePasse.length === 0)){
                 message = "Les champs mot de passe doivent être non vide et identiques!";
                 setAlert(AfficherMessageReussiteErreur(true, "danger", message));
-        }
-        else if(informations.nom === "admin"){
-            message = "Le nom d'utilisateur de peut pas être admin!";
-            setAlert(AfficherMessageReussiteErreur(true, "danger", message));
         }
     }
 
@@ -111,7 +112,7 @@ function AfficherChamps({ ModifierInformations }){
 function AfficherBouton({ VerifierInformationsFormulaire }){
     return (
         <>
-           <Button onClick={() => VerifierInformationsFormulaire()} >
+            <Button onClick={() => VerifierInformationsFormulaire()} >
                 Créer
             </Button> 
         </>
@@ -122,9 +123,13 @@ export function EstFormulaireCreationCompteValide(p_informations){
     const { nom, premierMotDePasse, deuxiemeMotDePasse } = p_informations;
     let estFormulaireValide = false;
     
-    if(EstFormulaireValide(p_informations) && nom !== "admin"){
+    if(EstFormulaireValide(p_informations)){
+
         if(premierMotDePasse === deuxiemeMotDePasse){
-            estFormulaireValide = true;
+
+            if(nom !== "admin"){
+                estFormulaireValide = true;
+            }
         }
     }
 

@@ -1,3 +1,4 @@
+// Autheur: Philippe-Anthony Daumas
 import {EstInformationValide} from './EstInformationValide';
 
 export function EstFormulaireValide(p_informations){

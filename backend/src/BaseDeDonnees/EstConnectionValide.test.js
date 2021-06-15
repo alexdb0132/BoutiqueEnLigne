@@ -1,3 +1,4 @@
+// Autheur: Philippe-Anthony Daumas
 import { MongoClient } from 'mongodb';
 import 'regenerator-runtime/runtime';
 

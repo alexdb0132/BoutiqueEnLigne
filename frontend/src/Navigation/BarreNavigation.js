@@ -19,6 +19,9 @@ function BarreNavigation()
                     <LinkContainer to='/' exact>
                         <Nav.Link>Accueil</Nav.Link>
                     </LinkContainer>
+                    <LinkContainer to='/CreationCompte'>
+                        <Nav.Link>S'inscrire</Nav.Link>
+                    </LinkContainer>
                     <LinkContainer to='/Produits'>
                         <Nav.Link>Produits</Nav.Link>
                     </LinkContainer>

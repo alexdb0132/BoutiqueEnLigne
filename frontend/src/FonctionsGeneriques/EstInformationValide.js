@@ -1,4 +1,4 @@
-
+// Autheur: Philippe-Anthony Daumas
 export function EstInformationValide(p_information){
     let estValide = false;
 

@@ -1,3 +1,4 @@
+// Autheur: Philippe-Anthony Daumas
 import React from 'react';
 import {
   Redirect,

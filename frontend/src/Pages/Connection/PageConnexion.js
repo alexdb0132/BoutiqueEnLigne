@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+// Autheur: Philippe-Anthony Daumas
+import React, { useState } from 'react';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { EstFormulaireValide } from '../../FonctionsGeneriques/EstFormulaireValide'
 import { AfficherMessageReussiteErreur } from '../../FonctionsGeneriques/AfficherMessageReussiteErreur'
 import { UtiliseAuth } from '../../Context/Auth'
+import { EstAdministrateur } from '../../Administrateur/InformationsAdministrateur';
 
 const model = {
     nomUtilisateur: "",
@@ -17,7 +19,7 @@ const model = {
 
 function PageConnexion(){
     const [informations, setInformations] = useState(model);
-    const { informationsCompte, setInformationsCompte } = UtiliseAuth();
+    const { setInformationsCompte } = UtiliseAuth();
     const [composantAlert, setAlert] = useState(AfficherMessageReussiteErreur(false, "danger", ""));
 
     let message = "";
@@ -30,19 +32,26 @@ function PageConnexion(){
 
     async function VerifierInformationsFormulaire(){
         if(EstFormulaireValide(informations)){
-            const informationsAEnvoyer = {};
-            informationsAEnvoyer.nomUtilisateur = informations.nomUtilisateur;
-            informationsAEnvoyer.motDePasse = informations.motDePasse;
 
-            const code = await EnvoyerInformations(informationsAEnvoyer);
-
-            if(code === 200){
+            if(EstAdministrateur(informations.nomUtilisateur, informations.motDePasse)){
                 ModifierInformationsContext();
                 setAlert(AfficherMessageReussiteErreur(false, "", message));
             }
-            else if(code === 400){
-                message = "Le nom d'utilisateur ou le mot de passe n'existe pas";
-                setAlert(AfficherMessageReussiteErreur(true, "danger", message));
+            else{
+                const informationsAEnvoyer = {};
+                informationsAEnvoyer.nomUtilisateur = informations.nomUtilisateur;
+                informationsAEnvoyer.motDePasse = informations.motDePasse;
+
+                const code = await EnvoyerInformations(informationsAEnvoyer);
+
+                if(code === 200){
+                    ModifierInformationsContext();
+                    setAlert(AfficherMessageReussiteErreur(false, "", message));
+                }
+                else if(code === 400){
+                    message = "Le nom d'utilisateur ou le mot de passe n'existe pas";
+                    setAlert(AfficherMessageReussiteErreur(true, "danger", message));
+                }
             }
         }
         else{
@@ -53,8 +62,8 @@ function PageConnexion(){
 
     function ModifierInformationsContext(){
         let nouvelleInformations = {};
-
-        nouvelleInformations = DonnerDroitsAcces(informations["nomUtilisateur"]);
+        
+        nouvelleInformations = DonnerDroitsAcces(informations);
         setInformationsCompte(nouvelleInformations);
     }
 
@@ -97,17 +106,20 @@ function AfficherFormulaireConnection({ ModifierInformations }){
 function AfficherBouton({ VerifierInformationsFormulaire }){
     return (
         <>
-           <Button onClick={() => VerifierInformationsFormulaire()} >
+            <Button onClick={() => VerifierInformationsFormulaire()} >
                 Se connecter
-           </Button> 
+            </Button> 
         </>
     );
 }
 
-export function DonnerDroitsAcces(p_nomUtilisateur){
+export function DonnerDroitsAcces(p_informations){
     const nouvellesInformationsContext = {};
-    nouvellesInformationsContext["nomUtilisateur"] = p_nomUtilisateur;
-    nouvellesInformationsContext["typeCompte"] = ("admin" === p_nomUtilisateur) ? "administrateur" : "client";
+    const { nomUtilisateur, motDePasse } = p_informations;
+
+    nouvellesInformationsContext["nomUtilisateur"] = nomUtilisateur;
+    nouvellesInformationsContext["typeCompte"] = EstAdministrateur(nomUtilisateur, motDePasse) ? 
+                                                "administrateur" : "client";
     nouvellesInformationsContext["estAuthentifie"] = true;
 
     return nouvellesInformationsContext;
@@ -116,6 +128,7 @@ export function DonnerDroitsAcces(p_nomUtilisateur){
 async function EnvoyerInformations(p_informations){
     const nomUtilisateur = p_informations.nomUtilisateur;
     const motDePasse = p_informations.motDePasse;
+    
     const resultat = await fetch(`/api/connexion/${nomUtilisateur}/${motDePasse}`);
     
     return resultat.status;

@@ -1,6 +1,8 @@
+// Autheur: Philippe-Anthony Daumas
 import React from 'react'
 import ReactDOM from 'react-dom';
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react';
+
 import PageCreationCompte from './PageCreationCompte';
 
 test('Afficher PageCreationCompte', () => {

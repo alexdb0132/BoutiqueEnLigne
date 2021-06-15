@@ -1,3 +1,4 @@
+// Autheur: Philippe-Anthony Daumas
 import { EstFormulaireValide } from './EstFormulaireValide';
 
 test('Les informations du formulaire sont valides', () => {
