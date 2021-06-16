@@ -116,13 +116,20 @@ app.post('/api/client/:nom/panier/viderPanier', (requete, reponse) =>{
     }, reponse);
 });
 
-app.post('/api/client/:nom/panier/ajouter/:id' ,(requete, reponse) => {
+app.post('/api/client/:nom/panier/ajouter/:nomItem' ,(requete,reponse) => {
     var nomClientReq = requete.params.nom;
-    var nomproduitReq = requete.params.id;
+    var nomproduitReq = requete.params.nomItem;
     utiliserDB(async (db) =>{
         try{
             const MessageRetour = await AjouterPanier(db,nomClientReq,nomproduitReq);
-            reponse.status(200).json(MessageRetour);
+            if(MessageRetour === "item ajouter")
+            {
+                reponse.status(200).json(MessageRetour);
+            }
+            else
+            {
+                reponse.status(400).json(MessageRetour);
+            }
         }catch(erreur){
             reponse.status(500).json({message:erreur});
         }
@@ -134,16 +141,15 @@ app.post('/api/client/:nom/panier/retirer/:nomItem' ,(requete,reponse) => {
     var nomproduitReq = requete.params.nomItem;
     utiliserDB(async (db) =>{
         try{
-            RetirerPanier(db, nomClientReq, nomproduitReq);
-            reponse.status(200).json("Item retirer");
+            let messageRetour = await RetirerPanier(db, nomClientReq, nomproduitReq);
+            reponse.status(200).json(messageRetour);
         }catch(erreur){
-            reponse.status(500).json({message:erreur});
+            reponse.status(500).json(MessageRetour);
         }
     },reponse);
 });
 
-
-app.get('/api/administrateur/ventes', (requete, reponse) =>{
+app.get('/api/administrateur/ventes', (requete,reponse) =>{
 
     utiliserDB(async (db) =>{
         try{
@@ -167,8 +173,8 @@ app.post('/api/administrateur/ajouterVente', (requete,reponse) => {
         if(nouvelleVente !== undefined)
         {
             utiliserDB(async (db) => {
-                await AjouterVente(db, nouvelleVente);
-                reponse.status(200).send("Vente ajouté");
+                const message = await AjouterVente(db, nouvelleVente);
+                reponse.status(200).send(message);
             }, reponse).catch(
                 () => reponse.status(500).send("Erreur : la vente n'a pas été ajoutée")
             );
@@ -193,4 +199,4 @@ app.get('/api/panier/:nomClient', getPanierClient);
 
 app.delete('/api/panier/suppression/:nomClient', deletePanierClient);
 
-app.listen(8000, () => console.log('Allo 8000'));
+app.listen(8000, () => console.log('Écoute le port 8000'));
