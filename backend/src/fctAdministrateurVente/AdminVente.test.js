@@ -8,7 +8,7 @@ describe('Recherchr ventes', () => {
 
     beforeAll(async () => {
         connection = await MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology : true });
-        db = await connection.db('BoutiqueEnLigne');
+        db = await connection.db('BoutiqueEnLigne_Test');
     });
 
     test('AfficheVentes', async () => {
