@@ -39,7 +39,7 @@ function App() {
           <RouteClient path="/Panier" component={PagePanier}/>
           <Route path="/CreationCompte" component={PageCreationCompte}/>
           <Route path="/Connexion" component={PageConnexion}/>
-          <Route path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
+          <RouteAdmin path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
           <Route path="/Produits" component={PageProduits} />
           <RouteAdmin path="/admin" component={PageAdmin}/>
         </Container>
