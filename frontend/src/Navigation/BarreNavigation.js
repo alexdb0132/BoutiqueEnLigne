@@ -19,6 +19,12 @@ function BarreNavigation()
                     <LinkContainer to='/AchatsAdmin'>
                         <Nav.Link>Achats admin</Nav.Link>
                     </LinkContainer>
+                    <LinkContainer to='/GestionProduit'>
+                        <Nav.Link>Gestion Produit</Nav.Link>
+                    </LinkContainer>
+                     <LinkContainer to='/AjouterProduit'>
+                        <Nav.Link>Ajouter Produit</Nav.Link>
+                    </LinkContainer>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

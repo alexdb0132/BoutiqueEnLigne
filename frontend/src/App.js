@@ -13,6 +13,12 @@ import PagePanier from './Pages/PagePanier';
 import PageAccueil from './Pages/PageAcceuil';
 import PageCreationCompte from './Pages/CreationCompte/PageCreationCompte';
 import PageAchatsAdmin from './Pages/PageAchatsAdmin';
+import PageGestionProduitAdmin from './Pages/PageGestionProduitAdmin'
+import PageModifierProduit from './Pages/PagesModifierProduit'
+import PageSupprimerProduit from './Pages/PageSupprimerProduit' 
+import PageAjouterProduit from './Pages/PageAjouterProduit' 
+
+
 
 function App() {
   return (
@@ -23,6 +29,13 @@ function App() {
         <Route path="/Panier" component={PagePanier} exact/>
         <Route path="/CreationCompte" component={PageCreationCompte}/>
         <Route path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
+        <Route path="/GestionProduit" component={PageGestionProduitAdmin} exact/>
+        <Route path="/modifier/:id" component={PageModifierProduit} />
+        <Route path="/supprimer/:id" component={PageSupprimerProduit} />
+        <Route path="/ajouterProduit" component={PageAjouterProduit} />
+
+
+
       </Container>
     </Router>
   );
