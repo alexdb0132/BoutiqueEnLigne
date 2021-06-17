@@ -5,6 +5,13 @@ import { CreerCompte } from './BaseDeDonnees/CreerCompte'
 import { EstInformationValide } from './VerifierInformationsCompte'
 import {AfficherPanier, ViderPanier,AjouterPanier,RetirerPanier } from './fctPanier/Panier'
 import {RechercherVentes} from './fctAdministrateurVente/AdminVente'
+import { AfficherInventaire, ModifierProduit } from './fctGestionProduitAdmin/GestionProduit';
+import { RechercherProduit } from './fctGestionProduitAdmin/GestionProduit'
+import { SupprimerProduit } from './fctGestionProduitAdmin/GestionProduit'
+import { AjouterProduit } from './fctGestionProduitAdmin/GestionProduit'
+import { FiltreParPropriete } from './fctGestionProduitAdmin/GestionProduit'
+import { RechercheUtilisateur } from './fctGestionProduitAdmin/GestionProduit';
+
 // je veux me créer un test qui vérifie si une fonction écrie dans une bd
 
 const app = express();
@@ -15,9 +22,11 @@ const utiliserDB = async(operations, reponse)=>{
         const client = await MongoClient.connect('mongodb://localhost:27017',{useUnifiedTopology: true});
         const db = client.db('BoutiqueEnLigne');
         await operations(db);
+
         client.close(db);
     }
     catch(erreur){
+        console.log(erreur)
         reponse.status(500).json({message:'erreur de la connection a la base de donnes'});
     }
 }
@@ -49,20 +58,112 @@ app.post("/api/creationCompte", (requete,reponse) => {
     }
 });
 
-app.get("/test", (requete, reponse) => {
-    const { nom, motDePasse } = requete.body;
+app.get("/api/inventaire", (requete, reponse) => {
+    //const { nom, motDePasse } = requete.body;
     utiliserDB( async (db) => {
-        const donneesTrouvees = await RechercherInformationsCompte(db, nom, motDePasse);
+        const inventaire = await AfficherInventaire(db);
 
-        if(donneesTrouvees === {}){
-            reponse.status(200).json(donneesTrouvees);
+        //const donneesTrouvees = await RechercherInformationsCompte(db, nom, motDePasse);
+
+        //if(donneesTrouvees === {}){
+        if(inventaire !=null){
+            console.log("inventaie")
+            reponse.status(200).json(inventaire);
         }
         else{
+            
             reponse.status(400).json({});
         }
     }, reponse)
 })
+app.get('/api/filtre/:propriete/:ordre',(requete,reponse)=>{
+    utiliserDB( async (db) => {
+        var filtrePropriete = requete.params.propriete;
+        var ordre = requete.params.ordre;
 
+        if(filtrePropriete !=null && ordre !=null){
+           const ordrefiltre=await FiltreParPropriete(db,filtrePropriete,ordre)
+            reponse.status(200).json(ordrefiltre);
+        }
+        else{
+            
+            reponse.status(400).json({});
+        }
+    }, reponse)
+})
+app.get('/api/inventaire/:id', (requete, reponse) => {
+    utiliserDB( async (db) => {
+        const ProduitRechercher = requete.params.id;
+        const produit = await RechercherProduit(db,ProduitRechercher)
+
+        if(produit !=null){
+            reponse.status(200).json(produit);
+        }
+        else{
+            
+            reponse.status(400).json({});
+        }
+    }, reponse)
+})
+app.get('/api/inventaire/rechercheUtilisateur/:recherche', (requete, reponse) => {
+    utiliserDB( async (db) => {
+        const rechercheUtilisateur = requete.params.recherche;
+
+        const resultat = await RechercheUtilisateur(db,rechercheUtilisateur)
+        console.log(resultat)
+        if(resultat !=null){
+            reponse.status(200).json(resultat);
+        }
+        else{
+            
+            reponse.status(400).json({});
+        }
+    }, reponse)
+})
+app.post('/api/inventaire/ajouter', (requete,reponse) =>{
+    const produit = requete.body
+    utiliserDB( async (db) => {
+        if(produit === null){
+            reponse.status(400).json({});
+        }
+        else{
+            await AjouterProduit(db,produit)
+            reponse.status(202).json(produit);
+        }
+    },reponse)
+});
+app.post('/api/inventaire/:id/modifier', (requete,reponse) =>{
+    const nouvelleValeurs = requete.body
+    const ProduitRechercher = requete.params.id;
+
+    utiliserDB( async (db) => {
+        const ProduitAModifier = await RechercherProduit(db,ProduitRechercher)
+        if(ProduitAModifier === null){
+            reponse.status(400).json({});
+        }
+        else{
+            await ModifierProduit(db,ProduitAModifier,nouvelleValeurs)
+            reponse.status(202).json(nouvelleValeurs);
+        }
+    },reponse)
+   
+});
+app.delete('/api/inventaire/:id/supprimer',(requete,reponse) =>{
+    const ProduitRechercher = requete.params.id
+
+    utiliserDB( async (db) => {
+        const ProduitASupprimer = await RechercherProduit(db,ProduitRechercher)
+        console.log(ProduitASupprimer)
+
+        if(ProduitASupprimer === null){
+            reponse.status(400).json({});
+        }
+        else{
+            await SupprimerProduit(db,ProduitASupprimer)
+            reponse.status(202).json(ProduitASupprimer);
+        }
+    },reponse)
+});
 /*----------- */
 
 app.get('/api/client/:nom/panier', (requete,reponse) => {
