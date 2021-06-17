@@ -1,9 +1,10 @@
+// Auteur: Philippe-Anthony Daumas
 import { MongoClient } from 'mongodb';
 import 'regenerator-runtime/runtime';
 
 import { RechercherCompte } from './RechercherCompte';
 
-describe('Rechercher', () => {
+describe('Rechercher des informations de connexion', () => {
     let connection, db;
 
     beforeAll( async () => {
@@ -27,8 +28,8 @@ describe('Rechercher', () => {
         await db.collection('InformationsClient').deleteMany({});
         await connection.close();
     });
-
-    test('Rechercher élément selon les informations données en paramètres', async () => {
+    
+    test('Rechercher un compte selon les informations données en paramètres', async () => {
         const donneesInexistantes = await RechercherCompte(db, "bob", "unAutreMotDePasse");
         const donneesExistantes = await RechercherCompte(db, "joeBine", "1234");
         const donneesNomExistantPasMotDePasse = await RechercherCompte(db, "joeBine", "motDePasseDifferent");

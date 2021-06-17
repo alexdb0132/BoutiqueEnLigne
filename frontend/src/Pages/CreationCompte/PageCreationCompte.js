@@ -1,10 +1,15 @@
+// Auteur: Philippe-Anthony Daumas
 import React, { useState } from 'react';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { EstInformationValide } from '../../FonctionsGeneriques/EstInformationValide';
+import { EstFormulaireValide } from '../../FonctionsGeneriques/EstFormulaireValide';
+import { AfficherMessageReussiteErreur } from '../../FonctionsGeneriques/AfficherMessageReussiteErreur';
 
 const model = {
     nom: "",
@@ -14,7 +19,7 @@ const model = {
 
 function PageCreationCompte(){
     const [informations, setInformations] = useState(model);
-    const [composantAlert, setAlert] = useState(AfficherComposantAlert(false, "danger", ""));
+    const [composantAlert, setAlert] = useState(AfficherMessageReussiteErreur(false, "danger", ""));
 
     let message = "";
 
@@ -25,7 +30,7 @@ function PageCreationCompte(){
     }
 
     async function VerifierInformationsFormulaire(){
-        if(EstFormulaireValide(informations)){
+        if(EstFormulaireCreationCompteValide(informations)){
             const informationsAEnvoyer = {};
             informationsAEnvoyer.nom = informations.nom;
             informationsAEnvoyer.motDePasse = informations.premierMotDePasse;
@@ -34,11 +39,11 @@ function PageCreationCompte(){
 
             if(code === 200){
                 message = "Vos informations ont été enregistrées avec succès!"
-                setAlert(AfficherComposantAlert(true,"success",message));
+                setAlert(AfficherMessageReussiteErreur(true,"success",message));
             }
             else if(code === 400){
                 message = "Le nom d'utilisateur ou le mot de passe existe déjà!"
-                setAlert(AfficherComposantAlert(true,"danger",message));
+                setAlert(AfficherMessageReussiteErreur(true,"danger",message));
             }
         }
         else{
@@ -47,15 +52,19 @@ function PageCreationCompte(){
     }
 
     function AfficherErreurFormulaire(){
-        if(!EstInformationValide(informations.nom)){
+        if(informations.nom === "admin"){
+            message = "Le nom d'utilisateur de peut pas être admin!";
+            setAlert(AfficherMessageReussiteErreur(true, "danger", message));
+        }
+        else if(!EstInformationValide(informations.nom)){
             message = "Le champ nom ne peut pas être vide!";
-            setAlert(AfficherComposantAlert(true, "danger", message));
+            setAlert(AfficherMessageReussiteErreur(true, "danger", message));
         }
         else if(informations.premierMotDePasse !== informations.deuxiemeMotDePasse 
             || (informations.premierMotDePasse.length === 0 
             || informations.deuxiemeMotDePasse.length === 0)){
                 message = "Les champs mot de passe doivent être non vide et identiques!";
-                setAlert(AfficherComposantAlert(true, "danger", message));
+                setAlert(AfficherMessageReussiteErreur(true, "danger", message));
         }
     }
 
@@ -103,52 +112,28 @@ function AfficherChamps({ ModifierInformations }){
 function AfficherBouton({ VerifierInformationsFormulaire }){
     return (
         <>
-           <Button onClick={() => VerifierInformationsFormulaire()} >
+            <Button onClick={() => VerifierInformationsFormulaire()} >
                 Créer
             </Button> 
         </>
     );
 }
 
-function AfficherComposantAlert(p_show,p_variant,p_message){
-    return (
-        <>
-            <Alert show={p_show} variant={p_variant} id="messagerAlert">{p_message}</Alert>
-        </>
-    );
-}
-
-export function EstFormulaireValide(p_informations){
+export function EstFormulaireCreationCompteValide(p_informations){
     const { nom, premierMotDePasse, deuxiemeMotDePasse } = p_informations;
     let estFormulaireValide = false;
-
-    if(EstInformationValide(nom) && EstInformationValide(premierMotDePasse) 
-    && EstInformationValide(deuxiemeMotDePasse) ){
-        
-        if(premierMotDePasse === deuxiemeMotDePasse){
-            estFormulaireValide = true;
-        }
-    }
-
-    return estFormulaireValide;
-}
-
-export function EstInformationValide(p_information){
-    let estValide = false;
-
-    if(p_information !== null && p_information !== undefined){
-
-        if(p_information.length !== 0){
-
-            const informationSansEspaces = p_information.trim();
-            if(informationSansEspaces.length !== 0){
     
-                estValide = true;
+    if(EstFormulaireValide(p_informations)){
+
+        if(premierMotDePasse === deuxiemeMotDePasse){
+
+            if(nom !== "admin"){
+                estFormulaireValide = true;
             }
         }
     }
 
-    return estValide;
+    return estFormulaireValide;
 }
 
 async function EnvoyerInformations(p_informations){

@@ -1,10 +1,4 @@
-
-/*export function SontInformationsValides(p_nom, p_motDePasse){
-    EstInformationCompteValide
-    
-    return EstInformationCompteValide(p_nom) && EstInformationValide(p_motDePasse);
-}*/
-
+// Auteur: Philippe-Anthony Daumas
 export function EstInformationValide(p_information){
     let estInformationValide = false;
 

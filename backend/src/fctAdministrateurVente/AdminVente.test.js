@@ -8,7 +8,7 @@ describe('Recherchr ventes', () => {
 
     beforeAll(async () => {
         connection = await MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology : true });
-        db = await connection.db('BoutiqueEnLigne');
+        db = await connection.db('BoutiqueEnLigne_Test');
     });
 
     test('AfficheVentes', async () => {
@@ -33,13 +33,11 @@ describe('AjouterVente', () =>{
         const donneesAttendu = {
             "nomClient": "test3",
             "produits": [{
-                "id": 1,
                 "nom": "MacBook pro",
                 "categorie": "ordinateur",
                 "prixRegulier": 1400.99,
                 "quantite": 1
             }, {
-                "id": 1,
                 "nom": "MacBook pro",
                 "categorie": "ordinateur",
                 "prixRegulier": 1400.99,

@@ -1,6 +1,7 @@
-import {EstInformationValide} from './VerifierInformationsCompte';
+// Auteur: Philippe-Anthony Daumas
+import {EstInformationValide} from './EstInformationValide';
 
-test('Vérifier que les informations reçues ne sont pas vide', ()=>{
+test('Vérifier que les informations reçues ne sont pas vide', () =>{
     expect(EstInformationValide("")).toBe(false);
     expect(EstInformationValide(" ")).toBe(false);
     expect(EstInformationValide(null)).toBe(false);
