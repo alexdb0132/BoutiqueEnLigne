@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import {
     createContext,
     useContext

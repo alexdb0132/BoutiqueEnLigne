@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import {EstAdministrateur} from './InformationsAdministrateur';
 
 test('Authentifier l\'administrateur', () => {

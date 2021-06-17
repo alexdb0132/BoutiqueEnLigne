@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 export async function RechercherCompte(p_baseDonnees, p_nomClient, p_motDePasse){
     let donneesSansId = null;
 

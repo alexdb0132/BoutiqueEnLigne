@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import { RechercherCompte } from './RechercherCompte'
 
 export async function EstConnectionValide(p_baseDonnees, p_nomClient, p_motDePasse){

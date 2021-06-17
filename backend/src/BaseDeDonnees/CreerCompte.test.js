@@ -1,11 +1,11 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import { MongoClient } from 'mongodb';
 import 'regenerator-runtime/runtime';
 
 import { CreerCompte } from './CreerCompte';
 import { RechercherCompte } from './RechercherCompte';
 
-describe('Creer un compte', () => {
+describe('Créer un compte', () => {
     let connection, db;
 
     beforeAll(async () => {

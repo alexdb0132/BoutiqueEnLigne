@@ -1,10 +1,10 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import { MongoClient } from 'mongodb';
 import 'regenerator-runtime/runtime';
 
 import { EstConnectionValide } from './EstConnectionValide';
 
-describe('Vérifier les informations de connection', () => {
+describe('Vérifier si les informations de connection sont valides', () => {
     let connection, db;
 
     beforeAll( async () => {

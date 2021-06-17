@@ -23,7 +23,7 @@ import RouteAdmin from './Routes/RouteAdmin';
 
 let model = {
   "nomUtilisateur": "",
-  "typeCompte": "", // client ou admin
+  "typeCompte": "", // client ou administrateur
   "estAuthentifie": false
 };
 

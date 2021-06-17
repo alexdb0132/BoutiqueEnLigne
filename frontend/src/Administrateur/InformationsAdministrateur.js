@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 const informationsAdministrateurs = {
     "nomAdministrateur" : "admin",
     "motDePasseAdministrateur" : "admin"

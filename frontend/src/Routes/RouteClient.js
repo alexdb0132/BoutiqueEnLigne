@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import React from 'react';
 import {
   Redirect,
@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import { UtiliseAuth } from '../Context/Auth';
+import { EstInformationValide } from '../FonctionsGeneriques/EstInformationValide';
 
 function RouteClient({ component: Component, ...reste }){
     const { informationsCompte } = UtiliseAuth();
@@ -20,6 +21,27 @@ function RouteClient({ component: Component, ...reste }){
             />
         </>
     );
+}
+
+export function EstCompteConnecteClient(p_informations){
+    let estValide = false;
+
+    if(EstCompteClientVerifiable(p_informations)){
+        const { typeCompte, estAuthentifie } = p_informations;
+        estValide = estAuthentifie 
+                 && typeCompte === "client";
+    }
+
+    return estValide;
+}
+
+function EstCompteClientVerifiable(p_informations){
+    const { nomUtilisateur, typeCompte, estAuthentifie } = p_informations;
+
+    return EstInformationValide(nomUtilisateur) 
+        && EstInformationValide(typeCompte) 
+        && estAuthentifie !== null 
+        && estAuthentifie !== undefined;
 }
 
 export default RouteClient;

@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import Alert from 'react-bootstrap/Alert';
 
 export function AfficherMessageReussiteErreur(p_show,p_variant,p_message){

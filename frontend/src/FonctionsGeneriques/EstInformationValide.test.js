@@ -1,4 +1,4 @@
-// Autheur: Philippe-Anthony Daumas
+// Auteur: Philippe-Anthony Daumas
 import { EstInformationValide } from './EstInformationValide';
 
 test('Vérifier une information du formulaire', () => {
