@@ -18,8 +18,8 @@ import { RechercheUtilisateur } from './fctGestionProduitAdmin/GestionProduit';
 import { EstInformationValide } from './EstInformationValide'
 import { EstConnectionValide } from './BaseDeDonnees/EstConnectionValide'
 import { getProduitsVoulues } from '../FonctionClient/getProduitsVoulues';
-import { getCategorie } from '../FonctionClient/getCategorie';
-import { getTotalProduits } from '../FonctionClient/getTotalProduits';
+import { getCategories } from '../FonctionClient/getCategories';
+import { getNombreTotalProduits } from '../FonctionClient/getNombreTotalProduits';
 import { putSelectionCategorie } from '../FonctionClient/putSelectionCategorie';
 import { postAjoutPanier } from '../FonctionClient/postAjoutPanier';
 import { getPanierClient } from '../FonctionClient/getPanierClient';
@@ -285,11 +285,13 @@ app.post('/api/administrateur/ajouterVente', (requete,reponse) => {
         } 
 });
 
-app.get('/api/produits/count', getTotalProduits);
+
+
+app.get('/api/produits/count', getNombreTotalProduits);
 
 app.get('/api/produits/:decalage/:produitsParPage', getProduitsVoulues);
 
-app.get('/api/produits/categorie', getCategorie);
+app.get('/api/produits/categories', getCategories);
 
 app.put('/api/produits/selectionCategorie', putSelectionCategorie);
 

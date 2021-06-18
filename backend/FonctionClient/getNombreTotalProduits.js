@@ -1,15 +1,15 @@
 import { utiliserDB } from './connection';
 import { TableauSelectionCategorie } from './putSelectionCategorie';
 
-export function getTotalProduits(requete, reponse) 
+export function getNombreTotalProduits(requete, reponse) 
 {
     utiliserDB( async(db) => {
-        const totalProduits = await getTotalProduitsBD(db, TableauSelectionCategorie());
+        const totalProduits = await getNombreTotalProduitsBD(db, TableauSelectionCategorie());
         reponse.status(200).json(totalProduits);
     }, reponse).catch(() => reponse.status(500).send('Erreur lors de la requête'));
 };
 
-export async function getTotalProduitsBD(db, tabCategorie)
+export async function getNombreTotalProduitsBD(db, tabCategorie)
 {
     if(tabCategorie.length < 1)
     {

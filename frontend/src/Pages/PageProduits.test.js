@@ -1,10 +1,8 @@
 import React from 'react';
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import PageProduits from './PageProduits';
-import { ExpansionPanelActions } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 
-test('Render PageProduits', () => {
+test('Affichage de la PageProduits', () => {
     const {getByText, getByRole} = render(<PageProduits/>);
 
     const titrePage = getByText(/Liste des produits/);

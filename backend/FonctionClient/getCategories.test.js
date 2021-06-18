@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import 'regenerator-runtime/runtime';
 
-import {getCategorieBD} from './getCategorie';
+import {getCategoriesBD} from './getCategories';
 
 describe('insert', () => {
     let connection, db;
@@ -19,7 +19,7 @@ describe('insert', () => {
         await db.collection('Produits').deleteMany({});
     });
 
-    test('Retourne toutes les catégories filtrées', async () => {
+    test('Retourne la liste des catégories', async () => {
         let produits = await db.collection('Produits');
 
         const produitsInserees = [{
@@ -44,7 +44,7 @@ describe('insert', () => {
 
         await produits.insertMany(produitsInserees);
 
-        const listeCategoriesRecue = await getCategorieBD(db);
+        const listeCategoriesRecue = await getCategoriesBD(db);
 
         listeCategoriesRecue.forEach((produit)=> {
             expect(listeCategories).toContainEqual(produit._id);
