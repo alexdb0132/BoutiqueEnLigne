@@ -11,12 +11,8 @@
     "@babel/node": "^7.14.2",
     "@babel/preset-env": "^7.14.4",
     "jest": "^27.0.4",
-<<<<<<< HEAD
-    "nodemon": "^2.0.7"
-=======
     "nodemon": "^2.0.7",
     "regenerator-runtime": "^0.13.7"
->>>>>>> 54e61b2bbdca72dd858300bbf98e9f89042e5422
   },
   "scripts": {
     "start": "npx nodemon --exec npx babel-node src/server.js",

@@ -40,7 +40,7 @@ export async function ModifierProduit(p_db,p_produit,p_nouvelleValeur){
     
 }
 export async function FiltreParPropriete(p_db,p_propriete,p_ordre){
-    if(p_ordre==="1"){
+    if(p_ordre===1){
         var monFiltre={[p_propriete]:1}
     }
     else{

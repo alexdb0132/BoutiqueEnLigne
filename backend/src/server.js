@@ -1,6 +1,5 @@
 import express from 'express'
 import { MongoClient } from 'mongodb'
-
 import { RechercherCompte } from './BaseDeDonnees/RechercherCompte'
 import { CreerCompte } from './BaseDeDonnees/CreerCompte'
 import { 
@@ -10,19 +9,14 @@ import {
     RetirerPanier 
 } from './fctPanier/Panier'
 import {RechercherVentes} from './fctAdministrateurVente/AdminVente'
-<<<<<<< HEAD
 import { AfficherInventaire, ModifierProduit } from './fctGestionProduitAdmin/GestionProduit';
 import { RechercherProduit } from './fctGestionProduitAdmin/GestionProduit'
 import { SupprimerProduit } from './fctGestionProduitAdmin/GestionProduit'
 import { AjouterProduit } from './fctGestionProduitAdmin/GestionProduit'
 import { FiltreParPropriete } from './fctGestionProduitAdmin/GestionProduit'
 import { RechercheUtilisateur } from './fctGestionProduitAdmin/GestionProduit';
-
-// je veux me créer un test qui vérifie si une fonction écrie dans une bd
-=======
 import { EstInformationValide } from './EstInformationValide'
 import { EstConnectionValide } from './BaseDeDonnees/EstConnectionValide'
-
 import { getProduitsVoulues } from '../FonctionClient/getProduitsVoulues';
 import { getCategorie } from '../FonctionClient/getCategorie';
 import { getTotalProduits } from '../FonctionClient/getTotalProduits';
@@ -30,7 +24,6 @@ import { putSelectionCategorie } from '../FonctionClient/putSelectionCategorie';
 import { postAjoutPanier } from '../FonctionClient/postAjoutPanier';
 import { getPanierClient } from '../FonctionClient/getPanierClient';
 import { deletePanierClient } from '../FonctionClient/deletePanierClient';
->>>>>>> 54e61b2bbdca72dd858300bbf98e9f89042e5422
 
 const app = express();
 app.use(express.json());
@@ -42,18 +35,10 @@ const utiliserDB = async(operations, reponse)=>{
 
         await operations(db);
 
-<<<<<<< HEAD
-        client.close(db);
-    }
-    catch(erreur){
-        console.log(erreur)
-        reponse.status(500).json({message:'erreur de la connection a la base de donnes'});
-=======
         client.close();
     }
     catch(erreur){
         reponse.status(500).json({message : 'Erreur de connexion à la base de donées', erreur});
->>>>>>> 54e61b2bbdca72dd858300bbf98e9f89042e5422
     }
 }
 
@@ -79,17 +64,10 @@ app.post("/api/creationCompte", (requete,reponse) => {
     }
 });
 
-<<<<<<< HEAD
 app.get("/api/inventaire", (requete, reponse) => {
-    //const { nom, motDePasse } = requete.body;
     utiliserDB( async (db) => {
         const inventaire = await AfficherInventaire(db);
-
-        //const donneesTrouvees = await RechercherInformationsCompte(db, nom, motDePasse);
-
-        //if(donneesTrouvees === {}){
         if(inventaire !=null){
-            console.log("inventaie")
             reponse.status(200).json(inventaire);
         }
         else{
@@ -132,7 +110,6 @@ app.get('/api/inventaire/rechercheUtilisateur/:recherche', (requete, reponse) =>
         const rechercheUtilisateur = requete.params.recherche;
 
         const resultat = await RechercheUtilisateur(db,rechercheUtilisateur)
-        console.log(resultat)
         if(resultat !=null){
             reponse.status(200).json(resultat);
         }
@@ -141,7 +118,7 @@ app.get('/api/inventaire/rechercheUtilisateur/:recherche', (requete, reponse) =>
             reponse.status(400).json({});
         }
     }, reponse)
-=======
+})
 app.get("/api/connexion/:nom/:motDePasse", (requete, reponse) => {
     const nom = requete.params.nom;
     const motDePasse = requete.params.motDePasse;
@@ -161,7 +138,6 @@ app.get("/api/connexion/:nom/:motDePasse", (requete, reponse) => {
     else{
         reponse.status(400).send("Informations invalides!");
     }
->>>>>>> 54e61b2bbdca72dd858300bbf98e9f89042e5422
 })
 app.post('/api/inventaire/ajouter', (requete,reponse) =>{
     const produit = requete.body
@@ -196,8 +172,6 @@ app.delete('/api/inventaire/:id/supprimer',(requete,reponse) =>{
 
     utiliserDB( async (db) => {
         const ProduitASupprimer = await RechercherProduit(db,ProduitRechercher)
-        console.log(ProduitASupprimer)
-
         if(ProduitASupprimer === null){
             reponse.status(400).json({});
         }
