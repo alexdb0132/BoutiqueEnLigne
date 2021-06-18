@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Pagination } from '@material-ui/lab';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AfficherCategories from '../ComposantsPageProduits/AffichageCategories';
+import AfficherProduits from '../ComposantsPageProduits/AffichageProduits';
 
 function PageProduits()
 {
@@ -11,7 +13,7 @@ function PageProduits()
     const [produitsParPage, setProduitsParPage] = useState(12);
     const [pageCourante, setPageCourante] = useState(1);
     const [nombreDePage, setNombreDePage] = useState(0);
-    const [categorie, setCategorie] = useState([]);
+    const [categoriesProduits, setCategoriesProduits] = useState([]);
     const [categorieSelectionnee, setCategorieSelectionnee] = useState([]);
     //const {authentification} = {};
 
@@ -19,9 +21,9 @@ function PageProduits()
 
     useEffect(() => {
         const chercherCategorie= async () => {
-            const resultatCategorie = await fetch('/api/produits/categorie');
+            const resultatCategorie = await fetch('/api/produits/categories');
             const bodyCategorie = await resultatCategorie.json().catch((error) => {console.log(error)});
-            setCategorie(bodyCategorie);
+            setCategoriesProduits(bodyCategorie);
         };
         chercherCategorie();
     },[])
@@ -87,7 +89,6 @@ function PageProduits()
         const produitAjoute = {
             nomClient: "jujube",
             produits:[{
-                id: donneesAffichees[index].id,
                 nom: donneesAffichees[index].nom,
                 description: donneesAffichees[index].description,
                 categorie: donneesAffichees[index].categorie,
@@ -109,9 +110,9 @@ function PageProduits()
             }
             else
             {
-                if(clientExistant.produits.some(produit => produit.id === produitAjoute.produits[0].id))
+                if(clientExistant.produits.some(produit => produit.nom === produitAjoute.produits[0].nom))
                 {
-                    const index = clientExistant.produits.findIndex(produit => produit.id === produitAjoute.produits[0].id);
+                    const index = clientExistant.produits.findIndex(produit => produit.nom === produitAjoute.produits[0].nom);
                     clientExistant.produits[index].quantite += 1; 
                     optionsPost = {method: 'POST', headers: {'Content-type' : 'application/json'}, body: JSON.stringify(clientExistant)};
                 }
@@ -120,10 +121,8 @@ function PageProduits()
                     clientExistant.produits.push(produitAjoute.produits[0]);
                     optionsPost = {method: 'POST', headers: {'Content-type' : 'application/json'}, body: JSON.stringify(clientExistant)};
                 }
-
                 await fetch(`/api/panier/suppression/${clientExistant.nomClient}`, {method: 'DELETE'});
             }
-
             await fetch('/api/produits/ajouterAuPanier', optionsPost);
         }
         else
@@ -140,7 +139,7 @@ function PageProduits()
     }
 
 //----------------------------------------------------------------------------------------------------------------------------------
-    
+
     return(
         <>
         <div className="col-12">
@@ -149,25 +148,18 @@ function PageProduits()
                     <h1>Liste des produits</h1>
                 </div>
                 <div className="col-2 form-floating pe-0">
-                    <select id="ddl1" className="form-select" aria-label="produits par page" onChange={NBProduitsPages}>
+                    <select id="dropdownlist" className="form-select" aria-label="produits par page" onChange={NBProduitsPages}>
                         <option value="12">12</option>
                         <option value="24">24</option>
                         <option value="48">48</option>
                         <option value={`${totalDonnees}`}>Tout</option>
                     </select>
-                    <label htmlFor="ddl1">Produits par page</label>
+                    <label htmlFor="dropdownlist">Produits par page</label>
                 </div>
             </div>
             <div className="row">
                 <div className="col-auto border">
-                    {categorie.map((categorie) =>
-                    <div className="row my-2"> 
-                        <div className="form-check">
-                            <input type="checkbox" id={categorie._id} value={categorie._id} onChange={SelectionCategorie} 
-                            className="form-check-input" aria-label="checkbox categorie"/>
-                            <label htmlFor={categorie._id} className="form-check-label ms-2">{categorie._id}</label>
-                        </div>
-                    </div>)}
+                    <AfficherCategories categories={categoriesProduits} SelectionCategorie={SelectionCategorie}/>
                 </div>
                 <div className="col">
                     <Table striped bordered hover aria-label="Tableau produits">
@@ -183,22 +175,10 @@ function PageProduits()
                             </tr>
                         </thead>
                         <tbody>
-                            {donneesAffichees.map((produit, index) => 
-                            <tr>
-                                <td>{produit.nom}</td>
-                                <td>{produit.description.substring(0,50)}...</td>
-                                <td>{produit.categorie}</td>
-                                <td>{produit.prix.toFixed(2)}</td>
-                                <td>{produit.rabais > 0 ? produit.rabais : null}</td>
-                                <td>{produit.rabais > 0 ? (produit.prix - (produit.prix * produit.rabais / 100)).toFixed(2) : produit.prix}</td>
-                                <td><button type="button" className="btn btn-primary btn-sm" 
-                                aria-label="btnAjouter" onClick={()=>AjoutPanier(index)}>Ajouter</button></td>
-                            </tr>   
-                            )}
+                            <AfficherProduits produits={donneesAffichees} ajoutPanier={AjoutPanier}/>
                         </tbody>
                     </Table>
-                    <Pagination count={nombreDePage} page={pageCourante} onChange={ChangementDePage}color="primary"
-                    />
+                    <Pagination count={nombreDePage} page={pageCourante} onChange={ChangementDePage} color="primary"/>
                 </div>
             </div>
         </div>
