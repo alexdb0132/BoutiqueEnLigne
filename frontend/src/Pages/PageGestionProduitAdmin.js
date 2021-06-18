@@ -26,9 +26,8 @@ function PageGestionProduitAdmin()
     async function RechercheUtilisateur(p_recherche){
         if(p_recherche.trim().length>0){
         const resultat = await fetch(`/api/inventaire/rechercheUtilisateur/${p_recherche}`);
-            const body3 = await resultat.json();
-            console.log(body3)
-            setInventaire(body3);
+            const body = await resultat.json();
+            setInventaire(body);
         }
     }
 
@@ -52,11 +51,11 @@ function PageGestionProduitAdmin()
                     </th>
                     <tr>
                     <th>Nom<img onClick={()=>FiltreParPropriete("nom",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
-                    <th>Description <img onClick={()=>FiltreParPropriete("nom",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
-                    <th> Categorie <img onClick={()=>FiltreParPropriete("nom",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
-                    <th> Prix <img onClick={()=>FiltreParPropriete("nom",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
-                    <th> Rabais <img onClick={()=>FiltreParPropriete("nom",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
-                    <th> Quantite <img onClick={()=>FiltreParPropriete("nom",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
+                    <th>Description <img onClick={()=>FiltreParPropriete("description",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
+                    <th> Categorie <img onClick={()=>FiltreParPropriete("categorie",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
+                    <th> Prix <img onClick={()=>FiltreParPropriete("prix",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
+                    <th> Rabais <img onClick={()=>FiltreParPropriete("rabais",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
+                    <th> Quantite <img onClick={()=>FiltreParPropriete("quantite",ordre)} src="favicon-16x16.png" alt="up down arrow"/></th>
                     </tr>
                 </thead>
                 <tbody>
