@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import 'regenerator-runtime/runtime';
-import { getTotalProduitsBD } from './getTotalProduits';
+import { getNombreTotalProduitsBD } from './getNombreTotalProduits';
 
 describe('insert', () => {
     let connection, db;
@@ -43,7 +43,7 @@ describe('insert', () => {
 
         await produits.insertMany(produitsInserees);
 
-        const totalProduit = await getTotalProduitsBD(db, tabCategorie);
+        const totalProduit = await getNombreTotalProduitsBD(db, tabCategorie);
 
         expect(totalProduit).toBe(4);
     });
@@ -73,7 +73,7 @@ describe('insert', () => {
 
         await produits.insertMany(produitsInserees);
 
-        const totalProduit = await getTotalProduitsBD(db, tabCategorie);
+        const totalProduit = await getNombreTotalProduitsBD(db, tabCategorie);
 
         expect(totalProduit).toBe(2);
     });
