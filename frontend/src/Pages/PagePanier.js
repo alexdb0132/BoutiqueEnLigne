@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import Button from 'react-bootstrap/button';
 import Total from './Total';
 import {UtiliseAuth} from '../Context/Auth'
+import Payement from './Payement'
 
 
 function PagePanier()
@@ -30,7 +31,6 @@ function PagePanier()
             const body = await resultat.json();
             setPanier(body)
             let quantiteDebut =[body[0].quantite];
-            console.log(body);
             if(body != null)
             {
                 body.map(item => {
@@ -51,23 +51,6 @@ function PagePanier()
         nouveautotal = nouveautotal.toFixed(2);
         setTotal(nouveautotal);
     }
-
-    function ConfirmerVente()
-    {
-        const optionsAjout = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(panierJSON)
-        };
-        const optionsViderPanier = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        };
-        fetch(`/api/client/${nomClientCourrant}/panier/viderPanier`,optionsViderPanier);
-        fetch('/api/administrateur/ajouterVente', optionsAjout)
-        
-    }
-
     async function AjouterItem(nomItem,index)
     {
         let nouvelleQuantite = quantite.slice();
@@ -110,6 +93,7 @@ function PagePanier()
 
     return(
         <>
+        {() => calculerTotal()}
             <h1>Votre Panier</h1>
             <p>{errorMessage}</p>
             <Table>
@@ -131,17 +115,16 @@ function PagePanier()
                                     <Button variant="outline-secondary" onClick={() => RetirerItem(article.nom, index + 1)}>-</Button>
                                 </TableCell>
                                 <TableCell align="center">{article.prixRabais}</TableCell>
-                                <div style={{display: "none"}}>{panierJSON.produits.push(article)}</div> {/*A modifier afin qu'il ne dois pas etre cache mais afficher simplement pas*/}
+                                <div style={{display: "none"}}>{panierJSON.produits.push(article)}</div>
                             </TableRow>
                             )
                         }
                 </TableBody>
             </Table>
-            <div style={{"textAlign": "right"}}>
-                
-            <Total sousTotal={total}/>
 
-            <Button variant="success" onClick={()=> ConfirmerVente()}>Confirmer</Button>
+            <div style={{"textAlign": "right"}}>    
+                <Total sousTotal={total}/>
+                <Payement nomClient= {nomClientCourrant} panierclient={panierJSON}/>
             </div>
 
         </>
