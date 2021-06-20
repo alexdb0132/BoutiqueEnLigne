@@ -42,7 +42,7 @@ function PageGestionProduitAdmin()
             <Table striped bordered hover>
                 <thead>
                     <th>
-
+                        <h1>Gestion de Produit</h1>
                         <Form className="d-flex">                        
                         <Form.Control id="titre" type="text" pattern="[a-zA-Z ]+" required="required" placeholder="Recherche par nom, description, categorie" onChange={e => recherche=e.target.value}/>
                         &nbsp;

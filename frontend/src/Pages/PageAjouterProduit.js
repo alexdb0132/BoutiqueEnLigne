@@ -25,38 +25,38 @@ function PageAjouterProduit(){
     {
         if(p_produit.nom.trim().length>0 && p_produit.description.trim().length>0 && p_produit.categorie.trim().length>0){
             AjouterProduit(p_produit)
-            alert("Produit Ajouter")
+            alert("Produit Ajoute")
 
         }
         else{
-            alert("un champ ne peut avoir seulment des espace")
+            alert("un champ ne peut avoir seulment des espaces")
         }
     }
 
     return (
         <>
-        <h1>Ajouter un produit</h1>
+        <h1>Ajout de produit</h1>
             <Form onSubmit={() => ValiderChampStringSeulmentEspace(produitAAjouter)}>
                 <Row>
                     <Col>
                         <Form.Group>
-                            <Form.Label>Nom</Form.Label>
-                            <Form.Control id="titre" type="text"  required="required"  onChange={e => produitAAjouter.nom=e.target.value}/>
+                            <Form.Label htmlFor="inputNom">Nom</Form.Label>
+                            <Form.Control aria-label="inputNom" type="text"  required="required"  onChange={e => produitAAjouter.nom=e.target.value}/>
                             <br/>
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control type="text"  required="required" onChange={e => produitAAjouter.description=e.target.value}/>
+                            <Form.Label htmlFor="inputDescription">Description</Form.Label>
+                            <Form.Control aria-label="inputDescription" type="text"  required="required" onChange={e => produitAAjouter.description=e.target.value}/>
                             <br/>
-                            <Form.Label>Categorie</Form.Label>
-                            <Form.Control type="text" pattern="[a-zA-Z ]+" required="required" onChange={e => produitAAjouter.categorie=e.target.value}/>
+                            <Form.Label htmlFor="inputCategorie">Categorie</Form.Label>
+                            <Form.Control aria-label="inputCategorie" type="text" pattern="[a-zA-Z ]+" required="required" onChange={e => produitAAjouter.categorie=e.target.value}/>
                             <br/>
-                            <Form.Label>Prix</Form.Label>
-                            <Form.Control type="number" min="0" step="0.01" required="required" onChange={e => produitAAjouter.prix=e.target.value}/>
+                            <Form.Label htmlFor="inputPrix">Prix</Form.Label>
+                            <Form.Control aria-label="inputPrix" type="number" min="0" step="0.01" required="required" onChange={e => produitAAjouter.prix=e.target.value}/>
                             <br/>
-                            <Form.Label>Rabais %</Form.Label> 
-                            <Form.Control type="number" min="0" max="100" step="0.01" required="required" onChange={e => produitAAjouter.rabais=e.target.value}/>
+                            <Form.Label htmlFor="inputRabais">Rabais %</Form.Label> 
+                            <Form.Control aria-label="inputRabais" type="number" min="0" max="100" step="0.01" required="required" onChange={e => produitAAjouter.rabais=e.target.value}/>
                             <br/>
-                            <Form.Label>Quantite</Form.Label>
-                            <Form.Control type="number" min="0" required="required" onChange={e => produitAAjouter.quantite=e.target.value}/>
+                            <Form.Label htmlFor="inputQuantite">Quantite</Form.Label>
+                            <Form.Control aria-label="inputQuantite" type="number" min="0" required="required" onChange={e => produitAAjouter.quantite=e.target.value}/>
                         </Form.Group>
                         <br/>
                         <Row>
