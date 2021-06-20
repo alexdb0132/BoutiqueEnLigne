@@ -23,7 +23,6 @@ function PageAchatsAdmin()
     function AfficherVentes() {
         return ventes.map((vente, index) => {
            const { _id, nomClient, produits} = vente
-           console.log(produits);
            return (
                 <TableRow key={_id}>
                     <TableCell align="center">{nomClient}</TableCell>
@@ -31,7 +30,6 @@ function PageAchatsAdmin()
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center"> Numero </TableCell>
                                     <TableCell align="center"> Nom </TableCell>
                                     <TableCell align="center"> Categorie</TableCell>
                                     <TableCell align="center"> Prix</TableCell>
@@ -42,7 +40,6 @@ function PageAchatsAdmin()
                                     {
                                     produits.map(produit =>
                                         <TableRow>
-                                            <TableCell align="center">{produit.id}</TableCell>
                                             <TableCell align="center">{produit.nom}</TableCell>
                                             <TableCell align="center">{produit.categorie}</TableCell>
                                             <TableCell align="center">{produit.prixRegulier} $</TableCell>
