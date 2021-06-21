@@ -1,5 +1,5 @@
 // Auteur: Philippe-Anthony Daumas
-import { DonnerDroitsAcces } from './PageConnexion';
+import { DonnerDroitsAcces } from './DonnerDroitsAcces';
 
 describe('Les informations ne sont pas celles de l\'administrateur et existe dans la base de données', () => {
 

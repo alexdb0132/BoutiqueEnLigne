@@ -4,12 +4,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
-import { UtiliseAuth } from '../Context/Auth';
+import BarreConnexionDeconnexion from './BarreConnexionDeconnexion';
 
 function BarreNavigation()
 {
-    const { informationsCompte } = UtiliseAuth();
-
     return(
         <Navbar bg="light" expand="sm">
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -40,26 +38,10 @@ function BarreNavigation()
                 </Nav>
             </Navbar.Collapse>
 
-            <Navbar.Collapse className="justify-content-end">
-                <AfficherNavBarConnexion informationsCompte={informationsCompte}/>
-            </Navbar.Collapse>
+            <BarreConnexionDeconnexion/>
 
         </Navbar>
     )
-}
-
-function AfficherNavBarConnexion({ informationsCompte }){
-    const AfficherBonjour = <Navbar.Text>Bonjour {informationsCompte["nomUtilisateur"]}</Navbar.Text>
-    const AfficherBoutonConnexion = <LinkContainer to='/Connexion'>
-                                        <Nav.Link>Connexion</Nav.Link>
-                                    </LinkContainer>
-    return (
-        <>
-            {
-                (informationsCompte["estAuthentifie"])?  AfficherBonjour : AfficherBoutonConnexion 
-            }
-        </>
-    );
 }
 
 export default BarreNavigation;

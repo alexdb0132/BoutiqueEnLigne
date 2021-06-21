@@ -14,8 +14,7 @@ function RouteAdmin({ component: Component, ...reste }){
     return (
         <>
             <Route {...reste} 
-                render={(props) => (informationsCompte["estAuthentifie"] 
-                                 && informationsCompte["typeCompte"] === "admin") ? 
+                render={(props) => (EstCompteConnecteAdmin(informationsCompte)) ? 
                     (<Component {...props} />) : (<Redirect to="/" />)
                 }
             />

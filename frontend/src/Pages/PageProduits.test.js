@@ -1,9 +1,22 @@
 import React from 'react';
-import { render } from "@testing-library/react";
 import PageProduits from './PageProduits';
+import { customRender } from '../Context/MockAuth';
+
+let model = {
+    "nomUtilisateur": "",
+    "typeCompte": "",
+    "estAuthentifie": false
+};
+
+let informationsCompte = model;
+
+function setInformationsCompte(){
+    ;
+};
 
 test('Affichage de la PageProduits', () => {
-    const {getByText, getByRole} = render(<PageProduits/>);
+    const providerPros = { informationsCompte, setInformationsCompte };
+    const {getByText, getByRole} = customRender(<PageProduits/>, { providerPros });
 
     const titrePage = getByText(/Liste des produits/);
     expect(titrePage).toBeInTheDocument();

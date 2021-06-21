@@ -5,8 +5,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {Link} from 'react-router-dom';
 
-
-
 function PageSupprimerProduit({match}){
     const identifiant = match.params.id;
     const [produit, setProduit] = useState([]);

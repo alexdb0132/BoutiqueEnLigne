@@ -18,12 +18,9 @@ import PageGestionProduitAdmin from './Pages/PageGestionProduitAdmin'
 import PageModifierProduit from './Pages/PagesModifierProduit'
 import PageSupprimerProduit from './Pages/PageSupprimerProduit' 
 import PageAjouterProduit from './Pages/PageAjouterProduit' 
-
-
 import PageProduits from './Pages/PageProduits';
 import PageConnexion from './Pages/Connection/PageConnexion';
 import { ContexteAuth } from './Context/Auth';
-import PageAdmin from './Pages/PageAdmin';
 import RouteClient from './Routes/RouteClient';
 import RouteAdmin from './Routes/RouteAdmin';
 
@@ -45,14 +42,12 @@ function App() {
           <RouteClient path="/Panier" component={PagePanier}/>
           <Route path="/CreationCompte" component={PageCreationCompte}/>
           <Route path="/Connexion" component={PageConnexion}/>
-          <Route path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
-          <Route path="/Produits" component={PageProduits} />
-          <RouteAdmin path="/admin" component={PageAdmin}/>
+          <RouteAdmin path="/AchatsAdmin" component={PageAchatsAdmin} exact/>
+          <RouteClient path="/Produits" component={PageProduits} />
           <RouteAdmin path="/GestionProduit" component={PageGestionProduitAdmin} exact/>
           <RouteAdmin path="/modifier/:id" component={PageModifierProduit} />
           <RouteAdmin path="/supprimer/:id" component={PageSupprimerProduit} />
           <RouteAdmin path="/ajouterProduit" component={PageAjouterProduit} />
-
         </Container>
       </Router>
     </ContexteAuth.Provider>

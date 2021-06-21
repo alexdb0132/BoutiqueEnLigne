@@ -4,6 +4,8 @@ import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AfficherCategories from '../ComposantsPageProduits/AffichageCategories';
 import AfficherProduits from '../ComposantsPageProduits/AffichageProduits';
+import { UtiliseAuth } from '../Context/Auth';
+
 
 function PageProduits()
 {
@@ -15,7 +17,7 @@ function PageProduits()
     const [nombreDePage, setNombreDePage] = useState(0);
     const [categoriesProduits, setCategoriesProduits] = useState([]);
     const [categorieSelectionnee, setCategorieSelectionnee] = useState([]);
-    //const {authentification} = {};
+    const { informationsCompte } = UtiliseAuth();
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
@@ -87,7 +89,7 @@ function PageProduits()
     async function AjoutPanier(index)
     {
         const produitAjoute = {
-            nomClient: "jujube",
+            nomClient: informationsCompte["nomUtilisateur"],
             produits:[{
                 nom: donneesAffichees[index].nom,
                 description: donneesAffichees[index].description,

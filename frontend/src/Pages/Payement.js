@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import Button from 'react-bootstrap/button';
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
+
+// Un test ne passe pas à cause des composants ci-dessous 
 import visaIcon from '@iconify-icons/logos/visa';
 import mastercardIcon from '@iconify-icons/logos/mastercard';
-
-
 
 function Paiement({nomClient, panierclient})
 {

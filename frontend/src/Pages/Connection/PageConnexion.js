@@ -11,6 +11,7 @@ import { EstFormulaireValide } from '../../FonctionsGeneriques/EstFormulaireVali
 import { AfficherMessageReussiteErreur } from '../../FonctionsGeneriques/AfficherMessageReussiteErreur'
 import { UtiliseAuth } from '../../Context/Auth'
 import { EstAdministrateur } from '../../Administrateur/InformationsAdministrateur';
+import { DonnerDroitsAcces } from './DonnerDroitsAcces';
 
 const model = {
     nomUtilisateur: "",
@@ -19,7 +20,7 @@ const model = {
 
 function PageConnexion(){
     const [informations, setInformations] = useState(model);
-    const { setInformationsCompte } = UtiliseAuth();
+    const { informationsCompte, setInformationsCompte } = UtiliseAuth();
     const [composantAlert, setAlert] = useState(AfficherMessageReussiteErreur(false, "danger", ""));
 
     let message = "";
@@ -69,6 +70,35 @@ function PageConnexion(){
 
     return (
         <>
+            {
+                (!informationsCompte["estAuthentifie"]) ? <AfficherPageConnexion ModifierInformations={ModifierInformations} 
+                                                                                composantAlert={composantAlert} 
+                                                                                VerifierInformationsFormulaire={VerifierInformationsFormulaire}/>
+                                                        : <AfficherComposantApresConnexion nomUtilisateur={informationsCompte["nomUtilisateur"]} />
+            } 
+        </>
+    );
+}
+
+function AfficherComposantApresConnexion({ nomUtilisateur }){
+    return (
+        <>
+            <Row>
+                <Col></Col>
+                <Col>
+                    <h2>Bienvenue {nomUtilisateur}</h2>
+                    <h3>Vous vous être connecté avec succès!</h3>
+                    <br/>
+                </Col>
+                <Col></Col>
+            </Row>
+        </>
+    );
+}
+
+function AfficherPageConnexion({ ModifierInformations, composantAlert, VerifierInformationsFormulaire }){
+    return (
+        <>
             <Row>
                 <Col></Col>
                 <Col>
@@ -111,18 +141,6 @@ function AfficherBouton({ VerifierInformationsFormulaire }){
             </Button> 
         </>
     );
-}
-
-export function DonnerDroitsAcces(p_informations){
-    const nouvellesInformationsContext = {};
-    const { nomUtilisateur, motDePasse } = p_informations;
-
-    nouvellesInformationsContext["nomUtilisateur"] = nomUtilisateur;
-    nouvellesInformationsContext["typeCompte"] = EstAdministrateur(nomUtilisateur, motDePasse) ? 
-                                                "administrateur" : "client";
-    nouvellesInformationsContext["estAuthentifie"] = true;
-
-    return nouvellesInformationsContext;
 }
 
 async function EnvoyerInformations(p_informations){

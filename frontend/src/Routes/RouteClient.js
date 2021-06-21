@@ -14,8 +14,7 @@ function RouteClient({ component: Component, ...reste }){
     return (
         <>
             <Route {...reste} 
-                render={(props) => (informationsCompte["estAuthentifie"] 
-                                 && informationsCompte["typeCompte"] === "client") ? 
+                render={(props) => (EstCompteConnecteClient(informationsCompte)) ? 
                     (<Component {...props} />) : (<Redirect to="/" />)
                 }
             />

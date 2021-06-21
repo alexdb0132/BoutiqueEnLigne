@@ -47,6 +47,9 @@ describe('AjouterVente', () =>{
 
         AjouterVente(db, donneesAttendu);
         const donneesTrouvees = await db.collection('achats').findOne({nomClient : "test3"});
-        expect(donneesTrouvees).toEqual(donneesAttendu);
+        expect(donneesTrouvees.nomClient).toEqual(donneesAttendu.nomClient);
+        expect(donneesTrouvees.categorie).toEqual(donneesAttendu.categorie);
+        expect(donneesTrouvees.prixRegulier).toEqual(donneesAttendu.prixRegulier);
+        expect(donneesTrouvees.quantite).toEqual(donneesAttendu.quantite);
     });
 })

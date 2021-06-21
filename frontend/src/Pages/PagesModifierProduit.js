@@ -31,14 +31,14 @@ function PageModifierProduit({ match }){
 
     async function modifierProduit(produitRenvoyer)
     {
-            let data = produitRenvoyer;
-            let options = {
-                method: 'POST',
-                headers: {'Content-type' : 'application/json'},
-                body: JSON.stringify(data)
+        let data = produitRenvoyer;
+        let options = {
+            method: 'POST',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify(data)
 
-            }        
-            await fetch(`/api/inventaire/${identifiant}/modifier`,options);   
+        }        
+        await fetch(`/api/inventaire/${identifiant}/modifier`,options);   
     }
     
 
