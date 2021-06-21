@@ -1,7 +1,7 @@
-import { AfficherInventaire, ModifierProduit } from './GestionProduit';
+import { AfficherInventaire,  ModifierProduit } from './GestionProduit';
 import { RechercherProduit } from './GestionProduit'
-import { SupprimerProduit } from './GestionProduit'
-import { AjouterProduit } from './GestionProduit'
+import {  SupprimerProduit } from './GestionProduit'
+import {  AjouterProduit } from './GestionProduit'
 import { FiltreParPropriete } from './GestionProduit'
 import { RechercheUtilisateur } from './GestionProduit';
 import { MongoClient } from 'mongodb';
@@ -19,7 +19,7 @@ describe('Ajouter un Produit', () => {
         await connection.close();
     });
 
-    test('AjouterProduit', async () => {
+    test('  AjouterProduit', async () => {
         const donneesAttendu = {
             
                 "nom": "Zune",
@@ -30,7 +30,7 @@ describe('Ajouter un Produit', () => {
                 "quantite": 1
             }        
 
-        AjouterProduit(db, donneesAttendu);
+         await AjouterProduit(db, donneesAttendu);
         const donneesTrouvees = await db.collection('Produit').findOne({nom : "Zune"});
         expect(donneesTrouvees).toEqual(donneesAttendu);
         })
@@ -47,7 +47,7 @@ describe('Supprimer un Produit', () => {
         await connection.close();
     });
 
-    test('SupprimerProduit', async () => {
+    test(' SupprimerProduit', async () => {
         const donneesASupprimer = {
             
                 "nom": "Zune",
@@ -59,8 +59,8 @@ describe('Supprimer un Produit', () => {
             }        
 
         var donneesAttendu = null;
-        AjouterProduit(db, donneesASupprimer);
-        SupprimerProduit(db,donneesASupprimer)
+        await AjouterProduit(db, donneesASupprimer);
+        await SupprimerProduit(db,donneesASupprimer)
         const donneesTrouvees = await db.collection('Produit').findOne({nom : "Zune"});
         expect(donneesTrouvees).toEqual(donneesAttendu);
         })
@@ -90,7 +90,7 @@ describe('Afficher Inventaire', () => {
             "quantite": 1
         }        
 
-        AjouterProduit(db, donneesAttendu);
+         await AjouterProduit(db, donneesAttendu);
         const donneesTrouvees = await AfficherInventaire(db)
         expect(donneesTrouvees).toEqual([donneesAttendu]);
         })
@@ -119,14 +119,14 @@ describe('RechercherProduit', () => {
             "quantite": 1
         }        
 
-        AjouterProduit(db, donneesAttendu);
+         await AjouterProduit(db, donneesAttendu);
         const donneesTrouvees = await RechercherProduit(db,donneesAttendu.nom)
         expect(donneesTrouvees).toEqual(donneesAttendu);
         })
 });
 
 
-describe('ModifierProduit', () => {
+describe(' ModifierProduit', () => {
     let connection, db;
 
     beforeAll(async () => {
@@ -138,7 +138,7 @@ describe('ModifierProduit', () => {
         await connection.close();
     });
 
-    test('ModifierProduit', async () => {
+    test(' ModifierProduit', async () => {
         const donnees = {            
             "nom": "Zune",
             "description":"Microsoft",
@@ -165,8 +165,8 @@ describe('ModifierProduit', () => {
             "quantite": 1
         }        
 
-        AjouterProduit(db, donnees);
-        ModifierProduit(db,donnees,donneeModifier)
+         await AjouterProduit(db, donnees);
+        await ModifierProduit(db,donnees,donneeModifier)
         const donneesTrouvees = await RechercherProduit(db,donneeModifier.nom)
         expect(donneesTrouvees.nom).toEqual(donneesAttendu.nom);
         })
@@ -203,8 +203,8 @@ describe('FiltreNomAsc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"nom",1)
         var donneeAttendu =  await db.collection('Produit').find().sort({nom:1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -242,8 +242,8 @@ describe('FiltreNomDesc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"nom",-1)
         var donneeAttendu =  await db.collection('Produit').find().sort({nom:-1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -281,8 +281,8 @@ describe('FiltreDescriptionAsc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"description",1)
         var donneeAttendu =  await db.collection('Produit').find().sort({description:1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -320,8 +320,8 @@ describe('FiltreDescriptionDesc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"description",-1)
         var donneeAttendu =  await db.collection('Produit').find().sort({description:-1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -359,8 +359,8 @@ describe('FiltreCategorieDesc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"categorie",-1)
         var donneeAttendu =  await db.collection('Produit').find().sort({categorie:-1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -398,8 +398,8 @@ describe('FiltreCategorieAsc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"categorie",1)
         var donneeAttendu =  await db.collection('Produit').find().sort({categorie:1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -437,8 +437,8 @@ describe('FiltrePrixAsc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"prix",1)
         var donneeAttendu =  await db.collection('Produit').find().sort({prix:1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -476,8 +476,8 @@ describe('FiltrePrixDesc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"prix",-1)
         var donneeAttendu =  await db.collection('Produit').find().sort({prix:-1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -515,8 +515,8 @@ describe('FiltreRabaisAsc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"rabais",1)
         var donneeAttendu =  await db.collection('Produit').find().sort({rabais:1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -554,8 +554,8 @@ describe('FiltreRabaisDesc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"rabais",-1)
         var donneeAttendu =  await db.collection('Produit').find().sort({rabais:-1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -593,8 +593,8 @@ describe('FiltreQuantiteAsc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"quantite",1)
         var donneeAttendu =  await db.collection('Produit').find().sort({quantite:1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -632,8 +632,8 @@ describe('FiltreQuantiteDesc', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await FiltreParPropriete(db,"quantite",-1)
         var donneeAttendu =  await db.collection('Produit').find().sort({quantite:-1}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -671,8 +671,8 @@ describe('RechercheUtilisateur_Categorie', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await RechercheUtilisateur(db,"electronique")
         const donneeAttendu =await db.collection('Produit').find({$text:{$search: "electronique"}}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -710,8 +710,8 @@ describe('RechercheUtilisateur_Description', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await RechercheUtilisateur(db,"Apple")
         const donneeAttendu =await db.collection('Produit').find({$text:{$search: "Apple"}}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
@@ -749,8 +749,8 @@ describe('RechercheUtilisateur_Nom', () => {
             }
            
 
-        AjouterProduit(db, donnee1);
-        AjouterProduit(db, donnee2);
+         await AjouterProduit(db, donnee1);
+         await AjouterProduit(db, donnee2);
         const donneesTrouvees = await RechercheUtilisateur(db,"Zune")
         const donneeAttendu =await db.collection('Produit').find({$text:{$search: "Zune"}}).toArray()
         expect(donneesTrouvees).toEqual(donneeAttendu);
